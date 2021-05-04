@@ -10,7 +10,7 @@ npm install
 ```
 Execute the server
 ```bash
-nodemon src 
+npm start
 ```
 ## Built with 🛠️
  * NodeJS
