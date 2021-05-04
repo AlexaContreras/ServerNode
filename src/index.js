@@ -7,8 +7,10 @@ const apiRouter = require('./router/api');
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-
+// Port is set
 app.set('port', 5000);
+
+// Router is set
 app.use('/api/items', apiRouter);
 
 // Run Server

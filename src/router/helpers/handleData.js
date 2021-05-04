@@ -1,6 +1,8 @@
 const handleData = ({ results, available_filters, filters }) => {
   const filterCategories = [];
 
+  // We evaluate if the filters field has data.
+  // If it does, we use it and if it doesn't we use the  available_filters
   if (filters.length !== 0) {
     filters[0].values[0].path_from_root.map((categorie) => filterCategories.push(categorie));
   } else {
@@ -9,6 +11,7 @@ const handleData = ({ results, available_filters, filters }) => {
     }
   }
 
+  // Author fields are set
   const author = {
     name: 'Alexa',
     lastname: 'Contreras',
@@ -16,14 +19,18 @@ const handleData = ({ results, available_filters, filters }) => {
 
   const categories = filterCategories;
 
+  // The items received are scrolled through and the required values are set.
   const items = results.map((result) => {
+    const price = result.price.toLocaleString('de-DE');
+
     const newResult = {
       id: result.id,
       title: result.title,
       price: {
         currency: result.currency_id,
-        amount: result.price,
+        amount: price,
       },
+      location: result.address.state_name,
       picture: result.thumbnail,
       condition: result.condition,
       free_shipping: result.shipping.free_shipping,
@@ -32,6 +39,7 @@ const handleData = ({ results, available_filters, filters }) => {
     return newResult;
   });
 
+  // Final products are created
   const products = {
     author,
     categories,
@@ -52,18 +60,21 @@ const handleDataId = ({
   shipping,
   sold_quantity,
 }) => {
+  // A new object is created with the required fields.
+  const priceModief = price.toLocaleString('de-DE');
   const item = {
     author: {
       name: 'Alexa',
       lastname: 'Contreras',
     },
+    query: '',
     categories: '',
     item: {
       id,
       title,
       price: {
         currency: currency_id,
-        amount: price,
+        amount: priceModief,
         decimals: '0',
       },
       category_id,
