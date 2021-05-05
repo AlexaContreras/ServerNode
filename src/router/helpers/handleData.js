@@ -1,3 +1,5 @@
+const { handlePrice } = require('./handlePrice');
+
 const handleData = ({ results, available_filters, filters }) => {
   const filterCategories = [];
 
@@ -21,15 +23,10 @@ const handleData = ({ results, available_filters, filters }) => {
 
   // The items received are scrolled through and the required values are set.
   const items = results.map((result) => {
-    const price = result.price.toLocaleString('de-DE');
-
     const newResult = {
       id: result.id,
       title: result.title,
-      price: {
-        currency: result.currency_id,
-        amount: price,
-      },
+      price: handlePrice(result.price, result.currency_id),
       location: result.address.state_name,
       picture: result.thumbnail,
       condition: result.condition,
@@ -60,8 +57,6 @@ const handleDataId = ({
   shipping,
   sold_quantity,
 }) => {
-  // A new object is created with the required fields.
-  const priceModief = price.toLocaleString('de-DE');
   const item = {
     author: {
       name: 'Alexa',
@@ -72,11 +67,7 @@ const handleDataId = ({
     item: {
       id,
       title,
-      price: {
-        currency: currency_id,
-        amount: priceModief,
-        decimals: '0',
-      },
+      price: handlePrice(price, currency_id),
       category_id,
       picture: pictures[0].url,
       condition,
